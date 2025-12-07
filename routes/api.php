@@ -15,7 +15,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::get('/campi', [CampiController::class, 'index']);
-Route::get('/campi/{id}', [CampiController::class, 'show']);
 
 
 // ---------------------

@@ -23,6 +23,8 @@ class CampiSeeder extends Seeder
                 'telefono' => $campo['telefono'],
                 'recensione' => $campo['recensione'],
                 'localita' => $campo['localita'],
+                'latitudine' => $campo['latitudine'],
+                'longitudine' => $campo['longitudine'],
                 'foto' => json_encode($campo['foto']),
                 'created_at' => now(),
                 'updated_at' => now(),

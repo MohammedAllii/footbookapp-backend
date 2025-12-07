@@ -13,15 +13,4 @@ class CampiController extends Controller
         return response()->json(Campi::all(), 200);
     }
 
-    // GET ONE FIELD
-    public function show($id)
-    {
-        $field = Campi::find($id);
-
-        if (!$field) {
-            return response()->json(['message' => 'Campo non trovato'], 404);
-        }
-
-        return response()->json($field, 200);
-    }
 }

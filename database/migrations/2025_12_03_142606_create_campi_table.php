@@ -15,7 +15,9 @@ return new class extends Migration {
             $table->string('email')->nullable();
             $table->string('telefono')->nullable();
             $table->float('recensione')->nullable();
-            $table->string('localita'); 
+            $table->string('localita');
+            $table->float('latitudine'); 
+            $table->float('longitudine'); 
             $table->json('foto'); 
             $table->timestamps();
         });

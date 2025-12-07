@@ -10,8 +10,11 @@ class Campi extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
-    protected $fillable = [
+    protected $casts = [
+        'servizi' => 'array', 
+        'foto' => 'array',
     ];
+
 
     protected $hidden = [
         'password',
