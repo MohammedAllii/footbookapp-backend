@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Api\CampiController;
+use App\Http\Controllers\StripePaymentController;
+
+
 
 
 // ---------------------
@@ -15,6 +18,14 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::get('/campi', [CampiController::class, 'index']);
+
+
+
+Route::post('/create-payment-intent', [StripePaymentController::class, 'createPaymentIntent']);
+Route::post('/stripe/webhook', [StripePaymentController::class, 'handleWebhook']);
+
+
+
 
 
 // ---------------------
