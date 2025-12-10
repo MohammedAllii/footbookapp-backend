@@ -17,7 +17,9 @@ Schema::create('users', function (Blueprint $table) {
     $table->string('cognome');
     $table->string('email')->unique();
     $table->string('password');
-    $table->integer('eta');
+    $table->string('eta');
+    $table->string('telefono');
+    $table->string('indirizzo');
     $table->timestamps();
 });
 

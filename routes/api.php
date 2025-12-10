@@ -5,6 +5,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Api\CampiController;
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\BookingController;
+
+
+
+
+Route::get('/booked-hours', [BookingController::class, 'getBookedHours']);
+Route::get('/today-next-reservation', [BookingController::class, 'todayNextReservation']);
+
+
 
 
 
@@ -32,8 +41,8 @@ Route::post('/stripe/webhook', [StripePaymentController::class, 'handleWebhook']
 // API Protette (token required)
 // ---------------------
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [AuthController::class, 'user']); 
-    Route::post('/logout', [AuthController::class, 'logout']); 
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/logout', [AuthController::class, 'logout']);
     Route::put('/user/update', [AuthController::class, 'updateProfile']);
-
 });
+
