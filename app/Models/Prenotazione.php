@@ -16,7 +16,9 @@ class Prenotazione extends Model
         'payment_intent_id',
     ];
 
-    public function campo() {
-        return $this->belongsTo(Campo::class, 'campi_id');
-    }
+public function campo()
+{
+    return $this->belongsTo(Campi::class, 'campi_id');
+}
+
 }

@@ -18,7 +18,7 @@ class BookingController extends Controller
         // Récupérer les heures déjà réservées pour ce terrain et cette date
         $bookedHours = Prenotazione::where('campi_id', $request->campi_id)
             ->where('data', $request->data)
-            ->where('payment_status', 'paid') // uniquement les paiements réussis
+            ->where('payment_status', 'paid') 
             ->pluck('ora');
 
         return response()->json([
@@ -27,26 +27,41 @@ class BookingController extends Controller
         ]);
     }
 
-    public function todayNextReservation()
-    {
-        $today = Carbon::today()->toDateString();
-        $now = Carbon::now();
+public function todayNextReservation()
+{
+    $today = Carbon::today()->toDateString();
+    $now = Carbon::now();
 
-        // Récupérer toutes les réservations d'aujourd'hui, non passées, triées par heure
-        $reservations = Prenotazione::where('data', $today)
-            ->where('payment_status', 'paid')
-            ->whereRaw("STR_TO_DATE(CONCAT(data,' ',ora), '%Y-%m-%d %H:%i') >= ?", [$now])
-            ->orderByRaw("STR_TO_DATE(CONCAT(data,' ',ora), '%Y-%m-%d %H:%i') ASC")
-            ->get();
+    $next = Prenotazione::with('campo')  
+        ->where('data', $today)
+        ->where('payment_status', 'paid')
+        ->whereRaw("STR_TO_DATE(CONCAT(data,' ',ora), '%Y-%m-%d %H:%i') >= ?", [$now])
+        ->orderByRaw("STR_TO_DATE(CONCAT(data,' ',ora), '%Y-%m-%d %H:%i') ASC")
+        ->first();
 
-        // Garder uniquement la première réservation par utilisateur
-        $result = $reservations->groupBy('user_id')->map(function($userReservations) {
-            return $userReservations->first();
-        })->values();
+    return response()->json([
+        'status' => true,
+        'reservation' => $next
+    ]);
+}
 
-        return response()->json([
-            'status' => true,
-            'reservations' => $result
-        ]);
-    }
+public function getUserReservations(Request $request)
+{
+    $request->validate([
+        'user_id' => 'required|integer',
+    ]);
+
+    $reservations = Prenotazione::with('campo')
+        ->where('user_id', $request->user_id)
+        ->orderBy('data', 'asc')
+        ->orderBy('ora', 'asc')
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'reservations' => $reservations
+    ]);
+}
+
+
 }

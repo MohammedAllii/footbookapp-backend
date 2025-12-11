@@ -12,6 +12,8 @@ use App\Http\Controllers\BookingController;
 
 Route::get('/booked-hours', [BookingController::class, 'getBookedHours']);
 Route::get('/today-next-reservation', [BookingController::class, 'todayNextReservation']);
+Route::get('/user-reservations', [BookingController::class, 'getUserReservations']);
+
 
 
 
